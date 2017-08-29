@@ -17,6 +17,11 @@ A custom provider for terraform.
 Provides an auth0 client
 
 ```hcl
+provider "auth0" {
+    domain = "abc.eu.auth0.com"
+    access_token = "management.access.token"
+}
+
 resource "auth0_client" "test-client" {
     name = "p-test-dev2"
     is_token_endpoint_ip_header_trusted = true
