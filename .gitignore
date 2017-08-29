@@ -1,0 +1,9 @@
+crash.log
+.terraform
+terraform-lib
+docker-compose.yml
+Dockerfile
+main.tf
+terraform-provider-auth0
+terraform.tfstate
+terraform.tfstate.backup
