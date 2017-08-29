@@ -19,6 +19,14 @@ func resourceClient() *schema.Resource {
         Delete: resourceClientDelete,
 
         Schema: map[string]*schema.Schema{
+            "client_id": &schema.Schema{
+                Type:     schema.TypeString,
+                Computed: true,
+            },
+            "client_secret": &schema.Schema{
+                Type:     schema.TypeString,
+                Computed: true,
+            },
             "name": &schema.Schema{
                 Type:     schema.TypeString,
                 Required: true,
@@ -116,7 +124,7 @@ func resourceClientCreate(d *schema.ResourceData, m interface{}) error {
     log.Println("Response JSON:" + string(data))
 
     if(resp.StatusCode != 201) {
-        return errors.New("Error: Invalid status code during create")
+        return errors.New("Error: Invalid status code during create: "+ string(data))
     }
 
     var respClient Client
@@ -156,7 +164,7 @@ func resourceClientRead(d *schema.ResourceData, m interface{}) error {
             d.SetId("")
             return nil
         } else {
-            return errors.New("Error: Invalid status code during read")
+            return errors.New("Error: Invalid status code during read: "+ string(data))
         }
     }
     
@@ -206,7 +214,7 @@ func resourceClientUpdate(d *schema.ResourceData, m interface{}) error {
     log.Println("Response JSON:" + string(data))
 
     if(resp.StatusCode != 200) {
-        return errors.New("Error: Invalid status code during update")
+        return errors.New("Error: Invalid status code during update: "+ string(data))
     }
 
     var respClient Client
