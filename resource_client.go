@@ -111,7 +111,7 @@ func resourceClientCreate(d *schema.ResourceData, m interface{}) error {
     client := http.Client{}
     req, err := http.NewRequest("POST", "https://" + config.domain + "/api/v2/clients", bytes.NewBuffer(jsonValue))
     req.Header.Add("Content-Type", "application/json")
-    req.Header.Add("Authorization", "Bearer" + config.accessToken)
+    req.Header.Add("Authorization", "Bearer " + config.accessToken)
     resp, err := client.Do(req)
     if err != nil {
         return err
@@ -145,7 +145,7 @@ func resourceClientRead(d *schema.ResourceData, m interface{}) error {
     client := http.Client{}
     req, err := http.NewRequest("GET", "https://" + config.domain + "/api/v2/clients/" + d.Id(), nil)
     req.Header.Add("Content-Type", "application/json")
-    req.Header.Add("Authorization", "Bearer" + config.accessToken)
+    req.Header.Add("Authorization", "Bearer " + config.accessToken)
 
     resp, err := client.Do(req)
     if err != nil {
@@ -201,7 +201,7 @@ func resourceClientUpdate(d *schema.ResourceData, m interface{}) error {
     client := http.Client{}
     req, err := http.NewRequest("PATCH", "https://" + config.domain + "/api/v2/clients/" + d.Id(), bytes.NewBuffer(jsonValue))
     req.Header.Add("Content-Type", "application/json")
-    req.Header.Add("Authorization", "Bearer" + config.accessToken)
+    req.Header.Add("Authorization", "Bearer " + config.accessToken)
     resp, err := client.Do(req)
     if err != nil {
         return err
@@ -231,7 +231,7 @@ func resourceClientDelete(d *schema.ResourceData, m interface{}) error {
     client := http.Client{}
     req, err := http.NewRequest("DELETE", "https://" + config.domain + "/api/v2/clients/" + d.Id(), nil)
     req.Header.Add("Content-Type", "application/json")
-    req.Header.Add("Authorization", "Bearer" + config.accessToken)
+    req.Header.Add("Authorization", "Bearer " + config.accessToken)
 
     resp, err := client.Do(req)
     if err != nil {

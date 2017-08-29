@@ -64,7 +64,7 @@ func resourceGrantCreate(d *schema.ResourceData, m interface{}) error {
     client := http.Client{}
     req, err := http.NewRequest("POST", "https://" + config.domain + "/api/v2/client-grants", bytes.NewBuffer(jsonValue))
     req.Header.Add("Content-Type", "application/json")
-    req.Header.Add("Authorization", "Bearer" + config.accessToken)
+    req.Header.Add("Authorization", "Bearer " + config.accessToken)
     resp, err := client.Do(req)
     if err != nil {
         return err
@@ -97,7 +97,7 @@ func resourceGrantRead(d *schema.ResourceData, m interface{}) error {
     client := http.Client{}
     req, err := http.NewRequest("GET", "https://" + config.domain + "/api/v2/client-grants?client_id="+d.Get("client_id").(string)+"&audience="+d.Get("audience").(string), nil)
     req.Header.Add("Content-Type", "application/json")
-    req.Header.Add("Authorization", "Bearer" + config.accessToken)
+    req.Header.Add("Authorization", "Bearer " + config.accessToken)
 
     resp, err := client.Do(req)
     if err != nil {
@@ -149,7 +149,7 @@ func resourceGrantUpdate(d *schema.ResourceData, m interface{}) error {
     client := http.Client{}
     req, err := http.NewRequest("PATCH", "https://" + config.domain + "/api/v2/client-grants/" + d.Id(), bytes.NewBuffer(jsonValue))
     req.Header.Add("Content-Type", "application/json")
-    req.Header.Add("Authorization", "Bearer" + config.accessToken)
+    req.Header.Add("Authorization", "Bearer " + config.accessToken)
     resp, err := client.Do(req)
     if err != nil {
         return err
@@ -179,7 +179,7 @@ func resourceGrantDelete(d *schema.ResourceData, m interface{}) error {
     client := http.Client{}
     req, err := http.NewRequest("DELETE", "https://" + config.domain + "/api/v2/client-grants/" + d.Id(), nil)
     req.Header.Add("Content-Type", "application/json")
-    req.Header.Add("Authorization", "Bearer" + config.accessToken)
+    req.Header.Add("Authorization", "Bearer " + config.accessToken)
 
     resp, err := client.Do(req)
     if err != nil {
