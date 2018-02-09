@@ -68,6 +68,11 @@ func resourceClient() *schema.Resource {
 				Type:     schema.TypeString,
 				Optional: true,
 			},
+			"callbacks": &schema.Schema{
+				Type:     schema.TypeList,
+				Elem:     &schema.Schema{Type: schema.TypeString},
+				Optional: true,
+			},
 		},
 	}
 }
