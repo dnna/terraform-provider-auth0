@@ -26,6 +26,7 @@ func resourceClient() *schema.Resource {
 			"client_secret": &schema.Schema{
 				Type:     schema.TypeString,
 				Computed: true,
+				Sensitive: true,
 			},
 			"name": &schema.Schema{
 				Type:     schema.TypeString,
@@ -33,40 +34,45 @@ func resourceClient() *schema.Resource {
 			},
 			"description": &schema.Schema{
 				Type:     schema.TypeString,
-				Required: true,
+				Optional: true,
 			},
 			"is_token_endpoint_ip_header_trusted": &schema.Schema{
 				Type:     schema.TypeBool,
-				Required: true,
+				Optional: true,
 			},
 			"is_first_party": &schema.Schema{
 				Type:     schema.TypeBool,
-				Required: true,
+				Optional: true,
 			},
 			"cross_origin_auth": &schema.Schema{
 				Type:     schema.TypeBool,
-				Required: true,
+				Optional: true,
 			},
 			"sso": &schema.Schema{
 				Type:     schema.TypeBool,
-				Required: true,
+				Optional: true,
 			},
 			"token_endpoint_auth_method": &schema.Schema{
 				Type:     schema.TypeString,
-				Required: true,
+				Optional: true,
 			},
 			"grant_types": &schema.Schema{
 				Type:     schema.TypeList,
 				Elem:     &schema.Schema{Type: schema.TypeString},
-				Required: true,
+				Optional: true,
 			},
 			"custom_login_page_on": &schema.Schema{
 				Type:     schema.TypeBool,
-				Required: true,
+				Optional: true,
 			},
 			"app_type": &schema.Schema{
 				Type:     schema.TypeString,
-				Required: true,
+				Optional: true,
+			},
+			"callbacks": &schema.Schema{
+				Type:     schema.TypeList,
+				Elem:     &schema.Schema{Type: schema.TypeString},
+				Optional: true,
 			},
 		},
 	}
