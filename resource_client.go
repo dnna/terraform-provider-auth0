@@ -26,6 +26,7 @@ func resourceClient() *schema.Resource {
 			"client_secret": &schema.Schema{
 				Type:     schema.TypeString,
 				Computed: true,
+				Sensitive: true,
 			},
 			"name": &schema.Schema{
 				Type:     schema.TypeString,
