@@ -59,7 +59,6 @@ func providerConfigure(d *schema.ResourceData) (interface{}, error) {
 	
 	url := "https://" + domain + "/oauth/token"
 	
-	// payload := strings.NewReader("{\"grant_type\":\"client_credentials\",\"client_id\": \"rOlwtvTBtmNER5AsdTgx1Xjd3gnRHapW\",\"client_secret\": \"YOUR_CLIENT_SECRET\",\"audience\": \"https://quanticmind.auth0.com/api/v2/\"}")
 	payload := strings.NewReader(`{ "grant_type": "client_credentials", ` +
 		`"client_id": "` + client_id +  `", ` +
 		`"client_secret": "` + client_secret + `", ` + 
