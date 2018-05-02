@@ -8,7 +8,6 @@ import (
     "encoding/json"
     "io/ioutil"
     "fmt"
-    "github.com/hashicorp/terraform/helper/schema"
 )
 
 type ClientRequest struct {
