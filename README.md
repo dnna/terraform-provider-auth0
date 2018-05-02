@@ -19,7 +19,8 @@ Provides an auth0 client
 ```hcl
 provider "auth0" {
     domain = "abc.eu.auth0.com"
-    access_token = "management.access.token"
+    client_id = "<CLIENT_ID>"
+    client_secret = "<CLIENT_SECRET>"
 }
 
 resource "auth0_client" "test-client" {
@@ -46,11 +47,15 @@ resource.auth0_client.test-client.client_secret = "generated_client_secret"
 #### Argument Reference
 
 Arguments have the same names as provided in Auth0 Management API documentation (https://auth0.com/docs/api/management/v2#!/Clients).
-The provider itself requires 2 parameters:
+
+The provider itself requires 3 parameters:
 
 
 - `domain` - The provided domain for the Auth0 account
-- `access_token` - An access token with sufficient permissions to access the Auth0 Management API and perform CRUD operations on clients
+- `client_id` - The client ID for the Application
+- `client_secret` - The client secret for the Applicaton.
+
+You can consult [the Auth0 Documentation](https://auth0.com/docs/api/management/v2/tokens#1-create-and-authorize-an-application) for steps on creating a Machine-to-Machine Application in your Auth0 tenant with access to its Auth0 Management API.
 
 #### Attributes Reference
 
