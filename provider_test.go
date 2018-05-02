@@ -18,12 +18,6 @@ type ClientRequest struct {
     Audience string `json:"audience"`
 }
 
-func TestProvider(t *testing.T) {
-    if err := Provider().(*schema.Provider).InternalValidate(); err != nil {
-        t.Fatalf("err: %s", err)
-    }
-}
-
 func TestProviderConfigRawSad(t *testing.T) {
     assert := assert.New(t)
     clientSecret := "cauliflower"
