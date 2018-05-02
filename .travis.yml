@@ -1,11 +1,11 @@
 language: go
 go:
-- 1.8.x
+- 1.10.x
 
 sudo: false
 
 install:
-- go get ./...
+- go get -t -v ./...
 
 script:
 - make test
