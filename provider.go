@@ -3,11 +3,11 @@ package main
 import (
 	"log";
 
-	"github.com/hashicorp/terraform/helper/schema";
-	"io/ioutil";
-	"strings";
-	"net/http";
-	"encoding/json";
+	"github.com/hashicorp/terraform/helper/schema"
+	"io/ioutil"
+	"strings"
+	"net/http"
+	"encoding/json"
 	"errors"
 	"strconv"
 )
