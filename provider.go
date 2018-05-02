@@ -1,15 +1,15 @@
 package main
 
 import (
-	"log";
+	"log"
 
-	"github.com/hashicorp/terraform/helper/schema"
-	"io/ioutil"
-	"strings"
-	"net/http"
 	"encoding/json"
 	"errors"
+	"github.com/hashicorp/terraform/helper/schema"
+	"io/ioutil"
+	"net/http"
 	"strconv"
+	"strings"
 )
 
 func Provider() *schema.Provider {
@@ -21,8 +21,8 @@ func Provider() *schema.Provider {
 				DefaultFunc: schema.EnvDefaultFunc("MANAGEMENT_API_DOMAIN", nil),
 			},
 			"client_id": &schema.Schema{
-				Type:		 schema.TypeString,
-				Required:	 true,
+				Type:        schema.TypeString,
+				Required:    true,
 				DefaultFunc: schema.EnvDefaultFunc("MANAGEMENT_API_CLIENT_ID", nil),
 			},
 			"client_secret": &schema.Schema{
@@ -42,15 +42,15 @@ func Provider() *schema.Provider {
 }
 
 type Config struct {
-	domain       string
-	accessToken  string
+	domain      string
+	accessToken string
 }
 
 type Auth0Token struct {
 	AccessToken string `json:"access_token"`
-	ExpiresIn int `json:"expires_in"`
-	Scope string `json:"scope"`
-	TokenType string `json:"token_type"`
+	ExpiresIn   int    `json:"expires_in"`
+	Scope       string `json:"scope"`
+	TokenType   string `json:"token_type"`
 }
 
 func providerConfigure(d *schema.ResourceData) (interface{}, error) {
@@ -58,16 +58,16 @@ func providerConfigure(d *schema.ResourceData) (interface{}, error) {
 	domain := d.Get("domain").(string)
 	clientSecret := d.Get("client_secret").(string)
 	clientId := d.Get("client_id").(string)
-	
+
 	return providerConfigureRaw(http.DefaultClient, domain, clientId, clientSecret)
 }
 
-func providerConfigureRaw(client *http.Client, domain string, clientId string, clientSecret string) (interface{}, error){
+func providerConfigureRaw(client *http.Client, domain string, clientId string, clientSecret string) (interface{}, error) {
 	url := "https://" + domain + "/oauth/token"
-	
+
 	payload := strings.NewReader(`{ "grant_type": "client_credentials", ` +
-		`"client_id": "` + clientId +  `", ` +
-		`"client_secret": "` + clientSecret + `", ` + 
+		`"client_id": "` + clientId + `", ` +
+		`"client_secret": "` + clientSecret + `", ` +
 		`"audience": "https://` + domain + `/api/v2/"}`)
 
 	req, _ := http.NewRequest("POST", url, payload)
@@ -103,5 +103,5 @@ func providerConfigureRaw(client *http.Client, domain string, clientId string, c
 
 	log.Printf("[DEBUG] Domain is %s, token is %s", domain, auth0Token.AccessToken)
 
-	return Config{ domain: domain, accessToken: auth0Token.AccessToken}, nil
+	return Config{domain: domain, accessToken: auth0Token.AccessToken}, nil
 }
