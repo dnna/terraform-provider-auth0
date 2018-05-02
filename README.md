@@ -57,6 +57,17 @@ The provider itself requires 3 parameters:
 
 You can consult [the Auth0 Documentation](https://auth0.com/docs/api/management/v2/tokens#1-create-and-authorize-an-application) for steps on creating a Machine-to-Machine Application in your Auth0 tenant with access to its Auth0 Management API.
 
+Optionally, you may also manually specify a token using the `access_token` parameter:
+
+```
+provider "auth0" {
+    domain = "abc.eu.auth0.com"
+    access_token = "<ACCESS_TOKEN>"
+}
+```
+
+When you do this, the provider will not request a token on your behalf.
+
 #### Attributes Reference
 
 - `client_id` - The client ID of the new client

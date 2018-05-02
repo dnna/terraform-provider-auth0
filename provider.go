@@ -22,13 +22,18 @@ func Provider() *schema.Provider {
 			},
 			"client_id": &schema.Schema{
 				Type:        schema.TypeString,
-				Required:    true,
+				Optional:    true,
 				DefaultFunc: schema.EnvDefaultFunc("MANAGEMENT_API_CLIENT_ID", nil),
 			},
 			"client_secret": &schema.Schema{
 				Type:        schema.TypeString,
-				Required:    true,
+				Optional:    true,
 				DefaultFunc: schema.EnvDefaultFunc("MANAGEMENT_API_CLIENT_SECRET", nil),
+			},
+			"access_token":  &schema.Schema{
+				Type:		 schema.TypeString,
+				Optional:	 true,
+				DefaultFunc: schema.EnvDefaultFunc("MANAGEMENT_ACCESS_TOKEN", nil), 
 			},
 		},
 
@@ -58,11 +63,25 @@ func providerConfigure(d *schema.ResourceData) (interface{}, error) {
 	domain := d.Get("domain").(string)
 	clientSecret := d.Get("client_secret").(string)
 	clientId := d.Get("client_id").(string)
+	accessToken := d.Get("access_token").(string)
+	log.Printf("[DEBUG] d %s, cs %s, ci %s, at %s", domain, clientSecret, clientId, accessToken)
 
-	return providerConfigureRaw(http.DefaultClient, domain, clientId, clientSecret)
+	return providerConfigureRaw(http.DefaultClient, domain, clientId, clientSecret, accessToken)
 }
 
-func providerConfigureRaw(client *http.Client, domain string, clientId string, clientSecret string) (interface{}, error) {
+func providerConfigureRaw(client *http.Client, domain string, clientId string, clientSecret string, accessToken string) (interface{}, error) {
+	if (accessToken == "") && (clientId == "" && clientSecret == "") {
+		message := "Must set either access_token or client_id AND client_secret."
+		return nil, errors.New(message)
+	}
+
+
+	// for the sake of compatibility, make sure you can still use the token if you've got it.
+	if accessToken != "" {
+		log.Printf("[INFO] Skipping token request, token already present.")
+		return Config{domain: domain, accessToken: accessToken}, nil
+	}
+
 	url := "https://" + domain + "/oauth/token"
 
 	payload := strings.NewReader(`{ "grant_type": "client_credentials", ` +

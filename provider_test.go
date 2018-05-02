@@ -30,9 +30,18 @@ func TestProviderConfigRawSad(t *testing.T) {
 	defer testServer.Close()
 
 	testDomain := testServer.URL[8:]
-	result, _ := providerConfigureRaw(testServer.Client(), testDomain, clientId, clientSecret)
+	result, _ := providerConfigureRaw(testServer.Client(), testDomain, clientId, clientSecret, "")
 	assert.Equal(Config{}, result)
 
+}
+
+func TestProviderConfigWithToken(t *testing.T) {
+	assert := assert.New(t)
+
+	result, err := providerConfigureRaw(http.DefaultClient, "contoso.auth0.com", "", "", "not_a_real_token")
+	assert.Equal("contoso.auth0.com", result.(Config).domain)
+	assert.Equal("not_a_real_token", result.(Config).accessToken)
+	assert.Equal(err, nil)
 }
 
 func TestProviderConfigRaw(t *testing.T) {
@@ -74,7 +83,7 @@ func TestProviderConfigRaw(t *testing.T) {
 	defer testServer.Close()
 
 	testDomain := testServer.URL[8:]
-	result, _ := providerConfigureRaw(testServer.Client(), testDomain, clientId, clientSecret)
+	result, _ := providerConfigureRaw(testServer.Client(), testDomain, clientId, clientSecret, "")
 
 	assert.Equal(1, times)
 	assert.Equal(testDomain, result.(Config).domain)
