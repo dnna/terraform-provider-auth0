@@ -75,7 +75,6 @@ func providerConfigureRaw(client *http.Client, domain string, clientId string, c
 		return nil, errors.New(message)
 	}
 
-
 	// for the sake of compatibility, make sure you can still use the token if you've got it.
 	if accessToken != "" {
 		log.Printf("[INFO] Skipping token request, token already present.")
