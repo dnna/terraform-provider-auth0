@@ -87,9 +87,9 @@ type Client struct {
 	Description                         string        `json:"description"`
 	Cross_origin_auth                   bool          `json:"cross_origin_auth"`
 	Sso                                 bool          `json:"sso"`
-	Token_endpoint_auth_method          string        `json:"token_endpoint_auth_method"`
+	Token_endpoint_auth_method          string        `json:"token_endpoint_auth_method,omitempty"`
 	Grant_types                         []interface{} `json:"grant_types"`
-	App_type                            string        `json:"app_type"`
+	App_type                            string        `json:"app_type,omitempty"`
 	Custom_login_page_on                bool          `json:"custom_login_page_on"`
 }
 
@@ -111,7 +111,7 @@ func resourceClientCreate(d *schema.ResourceData, m interface{}) error {
 	if err != nil {
 		return err
 	}
-	log.Println("Request JSON: " + string(jsonValue))
+	log.Println("[DEBUG] Request JSON: " + string(jsonValue))
 
 	config := m.(Config)
 	client := http.Client{}
@@ -127,7 +127,7 @@ func resourceClientCreate(d *schema.ResourceData, m interface{}) error {
 	if err != nil {
 		return err
 	}
-	log.Println("Response JSON:" + string(data))
+	log.Println("[DEBUG] Response JSON:" + string(data))
 
 	if resp.StatusCode != 201 {
 		return errors.New("Error: Invalid status code during create: " + string(data))
